@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodle ="clr-namespace:AppNote.ViewModels"
+             x:Class="AppNote.Views.NoteView">
+    <ContentView.BindingContext>
+        <viewmodle:NoteViewModel/>
+    </ContentView.BindingContext>
+    <VerticalStackLayout Padding="15">
+        <Label 
+            Text="Note Data"
+             HorizontalOptions="Start"
+            FontSize="Medium"/>
+        <Frame>
+            <VerticalStackLayout Padding="10" Spacing="10">
+                <Label 
+                   Text=" Note Titel"
+                   HorizontalOptions="Start"
+                    FontSize="Small" />
+                <Entry
+                    TextColor="Black"
+                    Placeholder="Enter Titel "
+                    Text="{Binding NoteTitel}"
+                   FontSize="Small"
+            />
+                <Label 
+                   Text=" Note Description"
+                   HorizontalOptions="Start"
+                   FontSize="Small" />
+                <Editor
+                    TextColor="Black"
+                    Text="{Binding NoteDescription}"
+                    Placeholder="Enter Description"
+                    FontSize="Small" 
+                    HeightRequest="200"/>
+                <Button
+                    Command="{Binding AddNoteCommade}"
+                    Text="Add Note"/>
+            </VerticalStackLayout>
+
+        </Frame>
+        <ListView ItemsSource="{Binding NoteCollection}" SelectedItem="{Binding selectedNote}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Title}" Detail="{Binding Description}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+
+        </ListView>
+        <HorizontalStackLayout Padding="10" Spacing="10" Margin="10">
+            <Button  Text="Remove" Command="{Binding RemoveNoteCommade}"/>
+            <Button  Text="Edit"  Command="{Binding EditeNoteCommade}"/>
+            
+        </HorizontalStackLayout>   
+        
+
+
+    </VerticalStackLayout>
+</ContentView>
