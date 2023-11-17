@@ -3,80 +3,51 @@ using AppNote.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
 
 namespace AppNote.ViewModels
 {
-    public partial class NoteViewModel : INotifyPropertyChanged
+    public partial class NoteViewModel : ObservableObject
     {
 
         //Fields
-        private string _noteTitel;
-        private string _noteDescription;
-        private  Note _selectedNote;
+        [ObservableProperty]
+        string noteTitel;
+
+        [ObservableProperty]
+        string noteDescription;
+
+        [ObservableProperty]
+        Note selectedNote;
+
+        [ObservableProperty]
+        public ObservableCollection<Note> noteCollection;
 
         //GET AND SET
-        public string NoteTitel
-        {
-            get => _noteTitel;
-            set
-            {
-                if(_noteTitel != value)
-                {
-                    _noteTitel = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public string NoteDescription
-        {
-            get => _noteDescription;
-            set
-            {
-                if (_noteDescription != value)
-                {
-                    _noteDescription = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public Note selectedNote
-        {
-            get => _selectedNote;
-            set
-            {
-                if (_selectedNote != value)
-                {
-                    _selectedNote = value;
-                    NoteTitel = _selectedNote.Title;
-                    NoteDescription = _selectedNote.Description;
-                    OnPropertyChanged();
-                }
-            }
-        }
+
+
+
 
         //Property
-        public ObservableCollection <Note> NoteCollection {  get; set; }
 
-        public ICommand AddNoteCommade  { get;  }
-        public ICommand EditeNoteCommade  { get;  }
-        public ICommand RemoveNoteCommade  { get; }
+
+
 
         public NoteViewModel()
         {
-            NoteCollection = new ObservableCollection<Note>();
-            AddNoteCommade = new Command(AddNote);
-            RemoveNoteCommade = new Command(DeleteNote);
-            EditeNoteCommade = new Command(EditeNote);
+            noteCollection = new ObservableCollection<Note>();
+
 
         }
-
-        private void EditeNote(object obj)
+        [RelayCommand]
+        void EditeNote()
         {
             if(selectedNote != null)
             {
@@ -99,7 +70,8 @@ namespace AppNote.ViewModels
             }
         }
 
-        private void DeleteNote(object obj)
+        [RelayCommand]
+        void DeleteNote()
         {
             if(selectedNote != null)
             {
@@ -110,7 +82,8 @@ namespace AppNote.ViewModels
             }
         }
 
-        private void AddNote(object obj)
+        [RelayCommand]
+        void AddNote()
         {
             //Generate a unique ID for the new person
             int newId = NoteCollection.Count > 0 ? NoteCollection.Max( p => p.Id) + 1 : 1;
@@ -127,11 +100,6 @@ namespace AppNote.ViewModels
             NoteDescription = string.Empty;
         }
 
-        //PropertyChanged عملية التغيير
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName=null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+       
     }
 }

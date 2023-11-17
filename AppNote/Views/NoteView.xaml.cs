@@ -8,7 +8,7 @@ public partial class NoteView : ContentView
 		BindingContext =new ViewModels.NoteViewModel();
 	}
 
-    public object Toast { get; private set; }
+    
 
    
 }

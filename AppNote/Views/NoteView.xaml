@@ -34,12 +34,12 @@
                     FontSize="Small" 
                     HeightRequest="200"/>
                 <Button
-                    Command="{Binding AddNoteCommade}"
+                    Command="{Binding AddNoteCommand}"
                     Text="Add Note"/>
             </VerticalStackLayout>
 
         </Frame>
-        <ListView ItemsSource="{Binding NoteCollection}" SelectedItem="{Binding selectedNote}">
+        <ListView ItemsSource="{Binding NoteCollection}" SelectedItem="{Binding SelectedNote}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Title}" Detail="{Binding Description}"/>
@@ -49,8 +49,8 @@
 
         </ListView>
         <HorizontalStackLayout Padding="10" Spacing="10" Margin="10">
-            <Button  Text="Remove" Command="{Binding RemoveNoteCommade}"/>
-            <Button  Text="Edit"  Command="{Binding EditeNoteCommade}"/>
+            <Button  Text="Remove" Command="{Binding DeleteNoteCommand}"/>
+            <Button  Text="Edit"  Command="{Binding EditeNoteCommand}"/>
             
         </HorizontalStackLayout>   
         
